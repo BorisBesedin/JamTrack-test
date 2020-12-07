@@ -4,14 +4,15 @@ const autocomplete = document.querySelector('.autocomplete');
 
 function showAutocomplete (input, dict) {
     let result = [];
+    let inputValue = input.value.toLowerCase().replace(/[^A-z]/g, ''); // не учитываем все "небуквы"
 
     function addResult(result) {
         search.value = result;
         autocomplete.style.display = 'none';
     }
 
-    dict.forEach(item => {
-        let inputValue = input.value.toLowerCase();
+    dict.forEach(item => {        
+        console.log(inputValue)
 
         for (let i = input.value.length; i >= 0; i--) {            
             if (inputValue.length &&  // проверяем, не пустой ли вообще инпут
@@ -20,8 +21,8 @@ function showAutocomplete (input, dict) {
                 ) {
                 result.push(item);
                 break;
-            } else {
-                inputValue = inputValue.slice(0, inputValue.length - 1) // отнимает по одной букве с конца пока не будет совпадений
+            } else if (!result){
+                inputValue = inputValue.slice(0, inputValue.length - 1) // если совпадений нет - отнимает по одной букве с конца пока не появятся
             }
         }        
     });
