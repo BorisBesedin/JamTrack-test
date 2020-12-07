@@ -4,26 +4,25 @@ const autocomplete = document.querySelector('.autocomplete');
 
 function showAutocomplete (input, dict) {
     let result = [];
-    let inputValue = input.value.toLowerCase().replace(/[^A-z]/g, ''); // не учитываем все "небуквы"
+    let inputValue = input.value.toLowerCase().replace(/[^A-z]/g, '');
 
     function addResult(result) {
         search.value = result;
         autocomplete.style.display = 'none';
     }
 
-    dict.forEach(item => {        
-        for (let i = input.value.length; i >= 0; i--) {            
-            if (inputValue.length &&  // проверяем, не пустой ли вообще инпут
-                item.includes(inputValue) && // есть ли в слове из словаря искомая комбинация
-                inputValue[0] === item[0] // совпадают ли начальные позиции
-                ) {
+    function getResult(word) {
+        dict.forEach(item => {               // перебираем словарь, ищем совпаения
+            if (word.length && item.includes(word) && word[0] === item[0]) {
                 result.push(item);
-                break;
-            } else if (!result.length){
-                inputValue = inputValue.slice(0, inputValue.length - 1) // если совпадений нет - отнимает по одной букве с конца пока не появятся
             }
-        }        
-    });
+        }); 
+        if (!result.length && word) {         // если совпадений нет, отнимаем последнюю букву и запускаем новую функцию
+            getResult(word.slice(0, word.length - 1))
+        }
+    }
+
+    getResult(inputValue);
 
     if (input.value && result) {
         autocomplete.style.display = 'block';
