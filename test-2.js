@@ -12,8 +12,6 @@ function showAutocomplete (input, dict) {
     }
 
     dict.forEach(item => {        
-        console.log(inputValue)
-
         for (let i = input.value.length; i >= 0; i--) {            
             if (inputValue.length &&  // проверяем, не пустой ли вообще инпут
                 item.includes(inputValue) && // есть ли в слове из словаря искомая комбинация
