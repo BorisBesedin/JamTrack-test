@@ -19,7 +19,7 @@ function showAutocomplete (input, dict) {
                 ) {
                 result.push(item);
                 break;
-            } else if (!result){
+            } else if (!result.length){
                 inputValue = inputValue.slice(0, inputValue.length - 1) // если совпадений нет - отнимает по одной букве с конца пока не появятся
             }
         }        
